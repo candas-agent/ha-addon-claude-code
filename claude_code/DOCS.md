@@ -31,6 +31,12 @@ The Home Assistant token carries the rights of its user. A non-admin user restri
 - For your own scripts, the token is also available in `~/.ha_token` and `<repo>/.ha_token`.
 - Claude Code settings: `/data/home/.claude/settings.json` (written once, never overwritten). By default, `python3 -I scripts/*` and read-only git commands run without confirmation; everything else (including `git push`) asks for approval.
 
+## Recommended settings (Info tab)
+- **Start on boot**: on (default for new installs), so Remote Control is back after a restart.
+- **Watchdog**: on, to restart the add-on if it stops.
+- **Auto update**: off — review the changelog before running new code on your server.
+- **Show in sidebar**: on, for quick access to the terminal (admins only).
+
 ## Security
 - Home Assistant backups include `/data`: the Home Assistant token, the GitHub token and the Claude sign-in are in them.
 - Stop the add-on when you do not use it to free memory.

@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.7
+- Start on boot by default; watchdog support (checks the web terminal port).
+
 ## 0.1.6
 - Remote Control now runs in a second window (`rc`) of the main tmux session: Ctrl+B 1 to see it, Ctrl+B 0 to go back.
 
