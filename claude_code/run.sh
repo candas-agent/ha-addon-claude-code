@@ -80,8 +80,9 @@ cd /data/projects
 tmux has-session -t main 2>/dev/null || tmux new-session -d -s main -c /data/projects
 if [ "$(opt remote_control)" = "true" ]; then
   # Requires a first interactive "claude" run in the terminal to sign in.
-  tmux has-session -t rc 2>/dev/null || \
-    tmux new-session -d -s rc -c /data/projects "claude remote-control; echo; echo 'Remote Control stopped.'; exec bash"
+  # Second window of the main session (Ctrl+B 1 / Ctrl+B 0 to switch from the web terminal).
+  tmux list-windows -t main -F '#W' | grep -qx rc || \
+    tmux new-window -d -t main -n rc -c /data/projects "claude remote-control; echo; echo 'Remote Control stopped.'; exec bash"
 fi
 
 # 6. Web terminal in Home Assistant ("Claude Code" entry in the sidebar)

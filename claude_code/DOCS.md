@@ -20,7 +20,7 @@ The Home Assistant token carries the rights of its user. A non-admin user restri
 
 ## Usage
 - The terminal is a `tmux` session: closing the browser tab does not stop it.
-- Remote Control runs in the `rc` tmux session (`tmux attach -t rc` to see it).
+- Remote Control runs in the second tmux window, named `rc`: press **Ctrl+B** then **1** to see it, **Ctrl+B** then **0** to go back (do not run `tmux attach` from the web terminal, it is already inside tmux).
 - **`ha-api`** calls the Home Assistant API without exposing the token. It reaches Home Assistant at `http://homeassistant:<port>`, the internal name every add-on can use; the port comes from the `ha_port` option, or is auto-detected (8123, then 80) when empty. HTTPS-only setups are not supported yet.
   - `ha-api /api/` → `{"message":"API running."}`
   - `ha-api GET /api/states/sun.sun`

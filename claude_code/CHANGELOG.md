@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.6
+- Remote Control now runs in a second window (`rc`) of the main tmux session: Ctrl+B 1 to see it, Ctrl+B 0 to go back.
+
 ## 0.1.5
 - Replace the `ha_url` option with an optional `ha_port`; Home Assistant is reached at `http://homeassistant:<port>`, port auto-detected (8123, then 80) when empty.
 
