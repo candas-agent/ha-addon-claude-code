@@ -1,7 +1,7 @@
 configuration:
-  ha_url:
-    name: Adresse de Home Assistant
-    description: Adresse utilisée par la commande ha-api. La valeur par défaut fonctionne depuis le module ; mettez l'adresse locale si vous avez changé le port HTTP (ex. http://192.168.1.10).
+  ha_port:
+    name: Port de Home Assistant
+    description: Port HTTP de Home Assistant, joint depuis le module à l'adresse http://homeassistant:<port>. Laisser vide pour le détecter (8123, puis 80).
   ha_token:
     name: Jeton Home Assistant
     description: Jeton d'accès longue durée (Profil → Sécurité). Aussi copié dans <dépôt>/.ha_token pour les scripts.

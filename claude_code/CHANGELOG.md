@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.5
+- Replace the `ha_url` option with an optional `ha_port`; Home Assistant is reached at `http://homeassistant:<port>`, port auto-detected (8123, then 80) when empty.
+
 ## 0.1.4
 - New `ha-api` helper: calls the Home Assistant API without exposing the token (each call still asks for approval).
 - New `ha_url` option (default `http://homeassistant:8123`).

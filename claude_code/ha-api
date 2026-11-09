@@ -4,14 +4,23 @@
 #   ha-api /api/                       -> {"message":"API running."}
 #   ha-api GET /api/states/sun.sun
 #   ha-api POST /api/services/light/turn_on '{"entity_id":"light.kitchen"}'
-# The URL comes from the add-on option "ha_url", the token from the "ha_token" option.
+# Home Assistant is reached at http://homeassistant:<ha_port> (port auto-detected if empty: 8123, then 80).
+# The token comes from the "ha_token" option.
 set -euo pipefail
 METHOD=GET
 case "${1:-}" in GET|POST|DELETE) METHOD="$1"; shift ;; esac
 P="${1:?usage: ha-api [GET|POST|DELETE] /api/path [json]}"
 case "$P" in /*) ;; *) echo "ha-api: path must start with /" >&2; exit 2 ;; esac
-URL="$(jq -r '.ha_url // empty' /data/options.json)"
-URL="${URL:-http://homeassistant:8123}"
+PORT="$(jq -r '.ha_port // empty' /data/options.json)"
+if [ -z "$PORT" ]; then
+  # Auto-detect: Home Assistant answers 401 on /api/ without a token.
+  for p in 8123 80; do
+    code="$(curl -s -o /dev/null -m 3 -w '%{http_code}' "http://homeassistant:${p}/api/" || true)"
+    if [ "$code" = "401" ] || [ "$code" = "200" ]; then PORT="$p"; break; fi
+  done
+  PORT="${PORT:-8123}"
+fi
+URL="http://homeassistant:${PORT}"
 TOKEN="$(jq -r '.ha_token // empty' /data/options.json)"
 args=(-sS --fail-with-body -X "$METHOD" -H "Authorization: Bearer ${TOKEN}" -H "Content-Type: application/json")
 if [ $# -ge 2 ]; then args+=(--data "$2"); fi
