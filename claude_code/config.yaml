@@ -1,5 +1,5 @@
 name: Claude Code
-version: "0.1.0"
+version: "0.1.1"
 slug: claude_code
 description: Sandboxed Claude Code — talks to Home Assistant through its API only, with no access to Home Assistant files
 url: https://github.com/candas-agent/ha-addon-claude-code
