@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3
+- Fix "claude: command not found" in the web terminal (login shell reset PATH).
+
 ## 0.1.2
 - Optional fields (GitHub token, git name and e-mail) can be left empty.
 

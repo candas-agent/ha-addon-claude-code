@@ -17,6 +17,15 @@ if ! command -v claude >/dev/null 2>&1; then
   curl -fsSL https://claude.ai/install.sh | bash
 fi
 
+# Login shells (the web terminal runs "bash -l") reset PATH from /etc/profile: expose claude everywhere.
+ln -sf "$HOME/.local/bin/claude" /usr/local/bin/claude
+cat > /etc/profile.d/claude_code.sh <<'PROFILE'
+export HOME=/data/home
+export PATH="$HOME/.local/bin:$PATH"
+export LANG=C.UTF-8
+cd /data/projects 2>/dev/null || true
+PROFILE
+
 # 2. Default Claude Code settings (written once: your own changes are never overwritten)
 if [ ! -f "$HOME/.claude/settings.json" ]; then
   mkdir -p "$HOME/.claude"
