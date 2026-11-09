@@ -1,0 +1,17 @@
+configuration:
+  ha_token:
+    name: Home Assistant token
+    description: Long-lived access token. Copied to <repo>/.ha_token for scripts.
+  github_token:
+    name: GitHub token
+    description: Fine-grained token limited to the working repositories. Optional.
+  git_name:
+    name: git user name
+  git_email:
+    name: git e-mail
+  repos:
+    name: Working repositories
+    description: owner/name list, cloned into /data/projets on start.
+  remote_control:
+    name: Remote Control
+    description: Run "claude remote-control" on start.

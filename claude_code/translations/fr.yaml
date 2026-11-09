@@ -1,0 +1,17 @@
+configuration:
+  ha_token:
+    name: Jeton Home Assistant
+    description: Jeton d'accès longue durée (Profil → Sécurité). Copié dans <dépôt>/.ha_token pour les scripts.
+  github_token:
+    name: Jeton GitHub
+    description: Jeton « fine-grained » limité aux dépôts de travail (Contents en lecture/écriture). Facultatif.
+  git_name:
+    name: Nom pour git
+  git_email:
+    name: E-mail pour git
+  repos:
+    name: Dépôts de travail
+    description: Liste au format propriétaire/nom, clonés dans /data/projets au démarrage.
+  remote_control:
+    name: Remote Control
+    description: Lance « claude remote-control » au démarrage, pour piloter la session depuis l'appli Claude.
