@@ -1,28 +1,29 @@
 # Claude Code
 
-Claude Code dans un conteneur isolé, à côté de Home Assistant.
+[Claude Code](https://claude.com/claude-code) in a sandboxed container next to Home Assistant.
 
-## Ce que le module voit
-- **Oui** : son propre dossier `/data` (dépôts de travail dans `/data/projets`, réglages de Claude Code).
-- **Oui** : le réseau — Home Assistant par son API (avec le jeton fourni), Internet (Claude, GitHub).
-- **Non** : les fichiers de Home Assistant (`/config`, `secrets.yaml`, base de l'historique, sauvegardes) et des autres modules. Aucun dossier n'est partagé avec le conteneur.
+## What the add-on can access
+- **Yes**: its own `/data` folder (working repositories in `/data/projects`, Claude Code settings).
+- **Yes**: the network — Home Assistant through its API (with the token you provide), the Internet (Claude, GitHub).
+- **No**: Home Assistant files (`/config`, `secrets.yaml`, the history database, backups) or other add-ons' files. No folder is shared with the container.
 
-Le jeton Home Assistant donne les droits de son utilisateur. Un utilisateur non administrateur limite davantage (lecture et pilotage, mais pas de création de règles).
+The Home Assistant token carries the rights of its user. A non-admin user restricts it further (read states and control devices, but no automation or configuration changes).
 
 ## Installation
-1. **Faire une sauvegarde** de Home Assistant.
-2. Paramètres → Modules complémentaires → Boutique → ⋮ → Dépôts : ajouter `https://github.com/candas-agent/ha-addon-claude-code`.
-3. Installer **Claude Code** (la première construction prend quelques minutes).
-4. Onglet **Configuration** : jeton Home Assistant, jeton GitHub (facultatif), nom et e-mail git, dépôts de travail (ex. `candas-agent/chauffage`).
-5. Démarrer, puis ouvrir **Claude Code** dans la barre latérale.
-6. Dans le terminal : `claude`, puis suivre le lien de connexion à votre compte.
-7. Facultatif : activer **Remote Control** et redémarrer le module ; la session apparaît dans l'appli Claude.
+1. **Back up** Home Assistant.
+2. Settings → Add-ons → Add-on store → ⋮ → Repositories: add `https://github.com/candas-agent/ha-addon-claude-code`.
+3. Install **Claude Code** (the first build takes a few minutes).
+4. **Configuration** tab: Home Assistant token, GitHub token (optional), git name and e-mail, working repositories (e.g. `your-name/your-repo`).
+5. Start the add-on, then open **Claude Code** in the sidebar.
+6. In the terminal, run `claude` and follow the sign-in link.
+7. Optional: enable **Remote Control** and restart the add-on; the session then shows up in the Claude apps.
 
-## Utilisation
-- Le terminal est une session `tmux` : fermer l'onglet ne l'arrête pas.
-- Remote Control tourne dans la session tmux `rc` (`tmux attach -t rc` pour la voir).
-- Réglages de Claude Code : `/data/home/.claude/settings.json` (créé une fois, jamais écrasé). Par défaut, `python3 -I scripts/*` et les commandes git de lecture sont autorisés sans confirmation ; tout le reste demande votre accord.
+## Usage
+- The terminal is a `tmux` session: closing the browser tab does not stop it.
+- Remote Control runs in the `rc` tmux session (`tmux attach -t rc` to see it).
+- Inside the add-on, Home Assistant is reachable at its usual LAN address (e.g. `http://192.168.1.x:8123`). The token is available in `~/.ha_token` and `<repo>/.ha_token`.
+- Claude Code settings: `/data/home/.claude/settings.json` (written once, never overwritten). By default, `python3 -I scripts/*` and read-only git commands run without confirmation; everything else (including `git push`) asks for approval.
 
-## Sécurité
-- Les sauvegardes de Home Assistant incluent `/data` : le jeton, le jeton GitHub et la connexion Claude s'y trouvent.
-- Arrêter le module quand il ne sert pas libère la mémoire.
+## Security
+- Home Assistant backups include `/data`: the Home Assistant token, the GitHub token and the Claude sign-in are in them.
+- Stop the add-on when you do not use it to free memory.

@@ -1,7 +1,7 @@
 name: Claude Code
 version: "0.1.0"
 slug: claude_code
-description: Claude Code isolé — accès à Home Assistant par l'API uniquement, aucun accès aux fichiers de Home Assistant
+description: Sandboxed Claude Code — talks to Home Assistant through its API only, with no access to Home Assistant files
 url: https://github.com/candas-agent/ha-addon-claude-code
 arch:
   - aarch64
@@ -14,8 +14,8 @@ ingress_port: 7681
 panel_icon: mdi:robot-outline
 panel_title: Claude Code
 panel_admin: true
-# Volontairement AUCUN « map: » : le conteneur ne voit ni /config, ni /share, ni /backup, ni les autres modules.
-# Volontairement pas de homeassistant_api / hassio_api : seul le jeton fourni dans les options donne accès à l'API.
+# Deliberately NO "map:" entry: the container cannot see /config, /share, /backup or other add-ons.
+# Deliberately no homeassistant_api / hassio_api: only the token given in the options grants API access.
 options:
   ha_token: ""
   github_token: ""

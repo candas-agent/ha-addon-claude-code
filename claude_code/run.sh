@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Démarrage du module Claude Code.
-# Tout ce qui doit être conservé est dans /data (dossier propre au module, inclus dans les sauvegardes HA).
+# Claude Code add-on startup.
+# Everything that must persist lives in /data (the add-on's own folder, included in Home Assistant backups).
 set -euo pipefail
 
 OPT=/data/options.json
@@ -9,15 +9,15 @@ opt() { jq -r --arg k "$1" '.[$k] // empty' "$OPT"; }
 export HOME=/data/home
 export PATH="$HOME/.local/bin:$PATH"
 export LANG=C.UTF-8
-mkdir -p "$HOME" /data/projets
+mkdir -p "$HOME" /data/projects
 
-# 1. Claude Code (installeur officiel, sans Node.js)
+# 1. Claude Code (official native installer, no Node.js needed)
 if ! command -v claude >/dev/null 2>&1; then
-  echo "[claude_code] Installation de Claude Code…"
+  echo "[claude_code] Installing Claude Code..."
   curl -fsSL https://claude.ai/install.sh | bash
 fi
 
-# 2. Réglages Claude Code par défaut (créés une seule fois : vos modifications ne sont jamais écrasées)
+# 2. Default Claude Code settings (written once: your own changes are never overwritten)
 if [ ! -f "$HOME/.claude/settings.json" ]; then
   mkdir -p "$HOME/.claude"
   cat > "$HOME/.claude/settings.json" <<'JSON'
@@ -40,7 +40,7 @@ if [ ! -f "$HOME/.claude/settings.json" ]; then
 JSON
 fi
 
-# 3. git et GitHub
+# 3. git and GitHub
 git config --global init.defaultBranch main
 [ -n "$(opt git_name)" ]  && git config --global user.name  "$(opt git_name)"
 [ -n "$(opt git_email)" ] && git config --global user.email "$(opt git_email)"
@@ -53,28 +53,28 @@ else
   rm -f "$HOME/.git-credentials"
 fi
 
-# 4. Dépôts de travail (format « propriétaire/nom »), clonés une fois dans /data/projets
+# 4. Working repositories ("owner/name"), cloned once into /data/projects
 HA_TOKEN="$(opt ha_token)"
 printf '%s' "$HA_TOKEN" > "$HOME/.ha_token"; chmod 600 "$HOME/.ha_token"
 for r in $(jq -r '.repos[]?' "$OPT"); do
-  d="/data/projets/$(basename "$r" .git)"
+  d="/data/projects/$(basename "$r" .git)"
   if [ ! -d "$d/.git" ]; then
-    echo "[claude_code] Clonage de $r…"
-    git clone "https://github.com/$r.git" "$d" || echo "[claude_code] Échec du clonage de $r (jeton GitHub ?)"
+    echo "[claude_code] Cloning $r..."
+    git clone "https://github.com/$r.git" "$d" || echo "[claude_code] Failed to clone $r (GitHub token?)"
   fi
-  # Les scripts lisent le jeton Home Assistant dans <dépôt>/.ha_token (ignoré par git)
+  # Scripts can read the Home Assistant token from <repo>/.ha_token (add it to the repo's .gitignore)
   [ -d "$d" ] && cp "$HOME/.ha_token" "$d/.ha_token" && chmod 600 "$d/.ha_token"
 done
 
-# 5. Session tmux principale (terminal web) et, si demandé, Remote Control
-cd /data/projets
-tmux has-session -t main 2>/dev/null || tmux new-session -d -s main -c /data/projets
+# 5. Main tmux session (web terminal) and, if enabled, Remote Control
+cd /data/projects
+tmux has-session -t main 2>/dev/null || tmux new-session -d -s main -c /data/projects
 if [ "$(opt remote_control)" = "true" ]; then
-  # Nécessite d'avoir lancé « claude » une première fois dans le terminal pour se connecter.
+  # Requires a first interactive "claude" run in the terminal to sign in.
   tmux has-session -t rc 2>/dev/null || \
-    tmux new-session -d -s rc -c /data/projets "claude remote-control; echo; echo 'Remote Control arrêté.'; exec bash"
+    tmux new-session -d -s rc -c /data/projects "claude remote-control; echo; echo 'Remote Control stopped.'; exec bash"
 fi
 
-# 6. Terminal web dans Home Assistant (onglet « Claude Code » de la barre latérale)
-echo "[claude_code] Prêt. Terminal sur le port 7681 (ingress)."
-exec ttyd -p 7681 -W -t titleFixed="Claude Code" tmux new-session -A -s main -c /data/projets
+# 6. Web terminal in Home Assistant ("Claude Code" entry in the sidebar)
+echo "[claude_code] Ready. Terminal on port 7681 (ingress)."
+exec ttyd -p 7681 -W -t titleFixed="Claude Code" tmux new-session -A -s main -c /data/projects

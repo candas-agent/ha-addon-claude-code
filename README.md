@@ -1,7 +1,9 @@
-# Module Home Assistant : Claude Code
+# Claude Code add-on for Home Assistant
 
-Dépôt de module complémentaire (add-on) pour Home Assistant OS : [Claude Code](https://claude.com/claude-code) dans un conteneur **sans accès aux fichiers de Home Assistant**, qui ne parle à Home Assistant que par son API.
+A Home Assistant OS add-on repository: [Claude Code](https://claude.com/claude-code) in a container **with no access to Home Assistant files**, talking to Home Assistant only through its API.
 
-Ajouter ce dépôt dans Paramètres → Modules complémentaires → Boutique → ⋮ → Dépôts, puis installer « Claude Code ». Mode d'emploi : [claude_code/DOCS.md](claude_code/DOCS.md).
+Add this repository under Settings → Add-ons → Add-on store → ⋮ → Repositories, then install "Claude Code". Full documentation: [claude_code/DOCS.md](claude_code/DOCS.md).
 
-Ce dépôt ne contient aucune donnée personnelle : jetons et dépôts de travail sont saisis dans la configuration du module.
+This repository holds no personal data: tokens and working repositories are entered in the add-on configuration.
+
+Not affiliated with Anthropic or Home Assistant. Untested yet — feedback welcome.

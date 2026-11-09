@@ -1,17 +1,17 @@
 configuration:
   ha_token:
     name: Home Assistant token
-    description: Long-lived access token. Copied to <repo>/.ha_token for scripts.
+    description: Long-lived access token (Profile → Security). Also copied to <repo>/.ha_token for scripts.
   github_token:
     name: GitHub token
-    description: Fine-grained token limited to the working repositories. Optional.
+    description: Fine-grained token limited to your working repositories (Contents read/write). Optional.
   git_name:
     name: git user name
   git_email:
     name: git e-mail
   repos:
     name: Working repositories
-    description: owner/name list, cloned into /data/projets on start.
+    description: List of owner/name repositories, cloned into /data/projects on start.
   remote_control:
     name: Remote Control
-    description: Run "claude remote-control" on start.
+    description: Run "claude remote-control" on start, to drive the session from the Claude apps.
