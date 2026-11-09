@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+- New `ha-api` helper: calls the Home Assistant API without exposing the token (each call still asks for approval).
+- New `ha_url` option (default `http://homeassistant:8123`).
+
 ## 0.1.3
 - Fix "claude: command not found" in the web terminal (login shell reset PATH).
 

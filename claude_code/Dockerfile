@@ -22,5 +22,6 @@ RUN case "${BUILD_ARCH}" in \
  && chmod a+x /usr/local/bin/ttyd
 
 COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+COPY ha-api /usr/local/bin/ha-api
+RUN chmod a+x /run.sh /usr/local/bin/ha-api
 CMD ["/run.sh"]

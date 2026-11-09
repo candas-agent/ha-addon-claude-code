@@ -21,7 +21,14 @@ The Home Assistant token carries the rights of its user. A non-admin user restri
 ## Usage
 - The terminal is a `tmux` session: closing the browser tab does not stop it.
 - Remote Control runs in the `rc` tmux session (`tmux attach -t rc` to see it).
-- Inside the add-on, Home Assistant is reachable at its usual LAN address (e.g. `http://192.168.1.x:8123`). The token is available in `~/.ha_token` and `<repo>/.ha_token`.
+- **`ha-api`** calls the Home Assistant API without exposing the token (URL from the `ha_url` option):
+  - `ha-api /api/` → `{"message":"API running."}`
+  - `ha-api GET /api/states/sun.sun`
+  - `ha-api POST /api/services/light/turn_on '{"entity_id":"light.kitchen"}'`
+
+  Claude asks for approval before each call. To allow read-only calls without confirmation, add `"Bash(ha-api GET *)"` to `permissions.allow` in `/data/home/.claude/settings.json` yourself.
+  Prefer it over `curl` with the token: Claude Code's auto mode may block commands that read a token file and send it over the network.
+- For your own scripts, the token is also available in `~/.ha_token` and `<repo>/.ha_token`.
 - Claude Code settings: `/data/home/.claude/settings.json` (written once, never overwritten). By default, `python3 -I scripts/*` and read-only git commands run without confirmation; everything else (including `git push`) asks for approval.
 
 ## Security

@@ -1,5 +1,5 @@
 name: Claude Code
-version: "0.1.3"
+version: "0.1.4"
 slug: claude_code
 description: Sandboxed Claude Code — talks to Home Assistant through its API only, with no access to Home Assistant files
 url: https://github.com/candas-agent/ha-addon-claude-code
@@ -18,10 +18,12 @@ panel_admin: true
 # Deliberately no homeassistant_api / hassio_api: only the token given in the options grants API access.
 # Optional fields (github_token, git_name, git_email) are only in the schema, so they can stay empty.
 options:
+  ha_url: "http://homeassistant:8123"
   ha_token: ""
   repos: []
   remote_control: false
 schema:
+  ha_url: url
   ha_token: password
   github_token: password?
   git_name: str?
