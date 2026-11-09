@@ -7,3 +7,7 @@ Add this repository under Settings → Add-ons → Add-on store → ⋮ → Repo
 This repository holds no personal data: tokens and working repositories are entered in the add-on configuration.
 
 Not affiliated with Anthropic or Home Assistant. Untested yet — feedback welcome.
+
+## License
+
+[MIT](LICENSE)
