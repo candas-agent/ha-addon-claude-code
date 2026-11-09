@@ -28,6 +28,7 @@ The Home Assistant token carries the rights of its user. A non-admin user restri
 
   Claude asks for approval before each call. To allow read-only calls without confirmation, add `"Bash(ha-api GET *)"` to `permissions.allow` in `/data/home/.claude/settings.json` yourself.
   Prefer it over `curl` with the token: Claude Code's auto mode may block commands that read a token file and send it over the network.
+- On every start, `/data/projects/CLAUDE.md` is (re)written to tell Claude sessions to use `ha-api`. Put your own instructions in your repositories, not in this file.
 - For your own scripts, the token is also available in `~/.ha_token` and `<repo>/.ha_token`.
 - Claude Code settings: `/data/home/.claude/settings.json` (written once, never overwritten). By default, `python3 -I scripts/*` and read-only git commands run without confirmation; everything else (including `git push`) asks for approval.
 

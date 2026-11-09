@@ -49,6 +49,25 @@ if [ ! -f "$HOME/.claude/settings.json" ]; then
 JSON
 fi
 
+# Instructions for Claude sessions started in /data/projects (refreshed on every start).
+cat > /data/projects/CLAUDE.md <<'MD'
+# Home Assistant add-on environment
+
+You run inside the "Claude Code" Home Assistant add-on: a container with no access to Home Assistant files.
+
+## Talking to Home Assistant
+- Always use the `ha-api` command. It handles the URL and the token for you:
+  - `ha-api /api/` (health check), `ha-api GET /api/states`, `ha-api GET /api/states/<entity_id>`
+  - `ha-api GET "/api/history/period/<ISO start>?filter_entity_id=<id>&end_time=<ISO end>"`
+  - `ha-api POST /api/services/<domain>/<service> '<json>'` (changes something: say what it will do first)
+- Do NOT read token files (`~/.ha_token`, `*/.ha_token`) or pass tokens to curl yourself.
+- `SUPERVISOR_TOKEN` and `http://supervisor/...` are deliberately not available (401).
+- Pipe JSON through `jq` to keep outputs short.
+
+## Working repositories
+Cloned under /data/projects when configured in the add-on options. Read each repository's own CLAUDE.md / README first.
+MD
+
 # 3. git and GitHub
 git config --global init.defaultBranch main
 [ -n "$(opt git_name)" ]  && git config --global user.name  "$(opt git_name)"

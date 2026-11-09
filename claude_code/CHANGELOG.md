@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.8
+- Write /data/projects/CLAUDE.md on start so Claude sessions know to use `ha-api` (not token files or the Supervisor token).
+
 ## 0.1.7
 - Start on boot by default; watchdog support (checks the web terminal port).
 
